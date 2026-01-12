@@ -1,0 +1,192 @@
+/* recap_langswitcher.css
+   Drop-up language switcher anchored above the hero caption widget.
+*/
+.recap-lang-switcher {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  font-family: 'Twemoji Country Flags', var(--font-family-base, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif);
+  user-select: none;
+}
+
+.recap-lang-switcher .rls-shell {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.recap-lang-switcher button {
+  appearance: none;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+.recap-lang-switcher .rls-current {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 112px;
+  height: 50px;
+  padding: 0 16px;
+  border-radius: 8px;
+  background: rgba(20, 24, 30, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+}
+
+.recap-lang-switcher .rls-current:focus-visible {
+  outline: 2px solid rgba(255, 165, 0, 0.85);
+  outline-offset: 2px;
+}
+
+.recap-lang-switcher .rls-flag {
+  font-size: 22px;
+  line-height: 1;
+  transform: translateY(1px);
+}
+
+.recap-lang-switcher .rls-code {
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  font-size: 16px;
+  line-height: 1;
+  opacity: 0.96;
+}
+
+.recap-lang-switcher .rls-caret {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 7px solid rgba(255, 255, 255, 0.85);
+  opacity: 0.8;
+  transform: translateY(-1px) rotate(180deg);
+}
+
+/* Drop-up menu */
+.recap-lang-switcher .rls-menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(100% + 8px);
+  display: none;
+  flex-direction: column;
+  border-radius: 10px;
+  background: rgba(20, 24, 30, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+
+  /* keep vertical breathing room, but no left/right inset */
+  padding: 10px 0;
+
+  /* spacing between items */
+  gap: 10px;
+
+  /* scrollable drop-up (but with hidden scrollbar) */
+  max-height: 60vh;
+  overflow-y: auto;
+  touch-action: pan-y;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+
+  /* hide scrollbar (still scrollable) */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge legacy */
+}
+
+.recap-lang-switcher.open .rls-menu {
+  display: flex;
+}
+
+/* little accent bar (like in the reference screenshot) */
+.recap-lang-switcher.open .rls-menu::after {
+  /* disabled accent corner */
+  content: none;
+  display: none;
+}
+
+/* items */
+.recap-lang-switcher .rls-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 14px;
+  height: 64px;
+
+  /* internal left/right padding for the contents only */
+  padding: 0 20px;
+
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.92);
+
+  /* allow pseudo highlights */
+  position: relative;
+  background: transparent;
+}
+
+/* Hover highlight: full-width, square, with extra top/bottom */
+.recap-lang-switcher .rls-item:hover::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -3px;
+  bottom: -3px;
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.08);
+  z-index: 0;
+}
+
+/* Selected highlight: full-width, square, with extra top/bottom */
+.recap-lang-switcher .rls-item[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -3px;
+  bottom: -3px;
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.12);
+  z-index: 0;
+}
+
+/* keep item contents above the highlight(s) */
+.recap-lang-switcher .rls-item>* {
+  position: relative;
+  z-index: 1;
+}
+
+/* If selected + hovered, keep selected a bit stronger */
+.recap-lang-switcher .rls-item[aria-selected="true"]:hover::after {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* Hide scrollbar while keeping scroll */
+.recap-lang-switcher .rls-menu {
+  scrollbar-width: none;
+}
+
+.recap-lang-switcher .rls-menu::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Disable orange accent (extra safety) */
+.recap-lang-switcher.open .rls-menu::after {
+  content: none !important;
+  display: none !important;
+}
